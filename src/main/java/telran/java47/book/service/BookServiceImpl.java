@@ -71,18 +71,16 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<BookDto> findBooksByAuthor(String author) {
-        return bookRepository.findByAuthorName(author)
-                .map(b -> modelMapper.map(b, BookDto.class))
-                .collect(Collectors.toList());
+    public List<BookDto> findBooksByAuthor(String authorName) {
+        Author author = authorRepository.findById(authorName).orElseThrow(EntityNotFoundException::new);
+        return author.getBooks().stream().map(b->modelMapper.map(b, BookDto.class)).collect(Collectors.toList());
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<BookDto> findBooksByPublisher(String publisher) {
-        return bookRepository.findBPublisherName(publisher)
-                .map(b -> modelMapper.map(b, BookDto.class))
+    public List<BookDto> findBooksByPublisher(String publisherName) {
+        Publisher publisher = publisherRepository.findById(publisherName).orElseThrow(telran.java47.book.dto.exceptions.EntityNotFoundException::new);
+        return publisher.getBooks().stream()
+                .map(b->modelMapper.map(b,BookDto.class))
                 .collect(Collectors.toList());
     }
 
@@ -97,7 +95,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(readOnly = true)
     public Set<String> findPublishersByAuthors(String author) {
-        return bookRepository.findPublishersByAuthorName(author);
+        return publisherRepository.findDistinctByBooks_Authors_Name(author).map(Publisher::getPublisherName).collect(Collectors.toSet());
     }
 
     @Override
