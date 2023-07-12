@@ -5,11 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 import telran.java47.book.dto.AuthorDto;
 import telran.java47.book.dto.BookDto;
-import telran.java47.book.model.Publisher;
 import telran.java47.book.service.BookService;
-
-import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,33 +23,33 @@ public class BookController {
     }
 
     @DeleteMapping("/book/{isbn}")
-    public BookDto removeBook(@PathVariable String isbn) {
-        return bookService.removeBook(isbn);
+    public BookDto remove(@PathVariable String isbn) {
+        return bookService.remove(isbn);
     }
 
     @PutMapping("/book/{isbn}/title/{title}")
-    public BookDto updateBookTitle(@PathVariable String isbn, @PathVariable String title) {
-        return bookService.updateBookTitle(isbn, title);
+    public BookDto updateBook(@PathVariable String isbn, @PathVariable String title) {
+        return bookService.updateBook(isbn, title);
     }
 
     @GetMapping("/books/author/{author}")
-    public List<BookDto> findBookByAuthor(@PathVariable String author) {
+    public Iterable<BookDto> findBooksByAuthor(@PathVariable String author) {
         return bookService.findBooksByAuthor(author);
     }
 
     @GetMapping("/books/publisher/{publisher}")
-    public List<BookDto> findBookByPublisher(@PathVariable String publisher) {
+    public Iterable<BookDto> findBooksByPublisher(@PathVariable String publisher) {
         return bookService.findBooksByPublisher(publisher);
     }
 
     @GetMapping("/authors/book/{isbn}")
-    public List<AuthorDto> findBookAuthors(@PathVariable String isbn) {
+    public Iterable<AuthorDto> findBookAuthors(@PathVariable String isbn) {
         return bookService.findBookAuthors(isbn);
     }
 
     @GetMapping("/publishers/author/{author}")
-    public Set<String> findPublishersByAuthors(@PathVariable String author) {
-        return bookService.findPublishersByAuthors(author);
+    public Iterable<String> findPublishersByAuthor(@PathVariable String author) {
+        return bookService.findPublishersByAuthor(author);
     }
 
     @DeleteMapping("/author/{author}")

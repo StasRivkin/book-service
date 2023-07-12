@@ -1,14 +1,20 @@
 package telran.java47.book.dao;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
-
-import telran.java47.book.model.Author;
 import telran.java47.book.model.Book;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
-public interface BookRepository extends PagingAndSortingRepository<Book, String> {
-    @Query("SELECT b.authors FROM Book b WHERE b.isbn = :isbn")
-    Stream<Author> findBookAuthorByIsbn(String isbn);
+public interface BookRepository {
+    Stream<Book> findByAuthorsName(String name);
+
+    Stream<Book> findByPublisherName(String name);
+
+    boolean existsById(String isbn);
+
+    Book save(Book book);
+
+    Optional<Book> findById(String isbn);
+
+    void deleteById(String isbn);
 }

@@ -1,30 +1,26 @@
 package telran.java47.book.service;
 
-import org.springframework.web.bind.annotation.PathVariable;
 import telran.java47.book.dto.AuthorDto;
 import telran.java47.book.dto.BookDto;
-import telran.java47.book.model.Publisher;
 
-import java.util.List;
-import java.util.Set;
 
 public interface BookService {
     boolean addBook(BookDto bookDto);
 
     BookDto findBookByIsbn(String isbn);
 
-    public BookDto removeBook(String isbn);
+    BookDto remove(String isbn);
 
-    public BookDto updateBookTitle(String isbn, String title);
+    BookDto updateBook(String isbn, String title);
 
-    public List<BookDto> findBooksByAuthor(String author);
+    Iterable<BookDto> findBooksByAuthor(String authorName);
 
-    public List<BookDto> findBooksByPublisher(@PathVariable String publisher);
+    Iterable<BookDto> findBooksByPublisher(String publisherName);
 
-    public List<AuthorDto> findBookAuthors(@PathVariable String isbn);
+    Iterable<AuthorDto> findBookAuthors(String isbn);
 
-    public Set<String> findPublishersByAuthors(@PathVariable String author);
+    Iterable<String> findPublishersByAuthor(String authorName);
 
-    public AuthorDto removeAuthor(@PathVariable String author);
+    AuthorDto removeAuthor(String authorName);
 
 }
